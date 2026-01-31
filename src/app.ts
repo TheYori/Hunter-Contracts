@@ -1,10 +1,13 @@
 import express, {Application, Request, Response} from 'express';
 import DotenvFlow from 'dotenv-flow';
+import routes from './routes';
 
 // Setup of dotenv configuration
-DotenvFlow.config();
+//DotenvFlow.config();
 //Create express application
 const app: Application = express();
+
+app.use('/api', routes)
 
 export function startServer() 
 {
