@@ -10,5 +10,6 @@ export interface Creature extends Document
     hunted: number;
     imageURL: string;
     isUnique: boolean;
+    isHidden: boolean;
     _createdBy: Hunter['id'];
 }
