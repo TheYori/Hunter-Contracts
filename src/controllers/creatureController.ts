@@ -32,3 +32,29 @@ export async function createCreature(req: Request, res: Response): Promise<void>
         await disconnect();
     }
 }
+
+/**
+ * Retrieves all creatures from the data sources
+ * @param req 
+ * @param res 
+ */
+export async function getAllCreatures(req: Request, res: Response)
+{
+    try 
+    {
+        await connect();
+
+        const result = await creatureModel.find({});
+
+        res.status(200).send(result); //Succes status - 200 means "OK"
+    }
+    catch (err) 
+    {
+        //Server error status - 500 means "Internal Server Error"
+        res.status(500).send("Could retrieve creatures. Error: " + err); 
+    }
+    finally 
+    {
+        await disconnect();
+    }
+}
