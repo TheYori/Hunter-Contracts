@@ -58,3 +58,30 @@ export async function getAllCreatures(req: Request, res: Response)
         await disconnect();
     }
 }
+
+/**
+ * Retrieves a creature by ID from the data sources
+ * @param req 
+ * @param res 
+ */
+export async function getCreatureById(req: Request, res: Response)
+{
+    try 
+    {
+        await connect();
+
+        const id = req.params.id;
+        const result = await creatureModel.find({_id: id});
+
+        res.status(200).send(result); //Succes status - 200 means "OK"
+    }
+    catch (err) 
+    {
+        //Server error status - 500 means "Internal Server Error"
+        res.status(500).send("Could retrieve creatures by ID. Error: " + err); 
+    }
+    finally 
+    {
+        await disconnect();
+    }
+}
