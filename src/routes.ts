@@ -1,5 +1,5 @@
 import {Router, Request, Response} from 'express'
-import { createCreature, getAllCreatures, getCreatureById, updateCreatureById } from './controllers/creatureController';
+import { createCreature, getAllCreatures, getCreatureById, updateCreatureById, deleteCreatureById } from './controllers/creatureController';
 
 const router: Router = Router();
 
@@ -14,4 +14,5 @@ router.post('/creatures', createCreature);
 router.get('/creatures', getAllCreatures);
 router.get('/creatures/:id', getCreatureById);
 router.put('/creatures/:id', updateCreatureById);
+router.delete('/creatures/:id', deleteCreatureById);
 export default router;

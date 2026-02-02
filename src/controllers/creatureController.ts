@@ -104,7 +104,7 @@ export async function updateCreatureById(req: Request, res: Response)
 
         if (!result) 
         {
-            res.status(404).send('Cannot update create with id = ' + id); //Client error status - 404 means "Not Found"
+            res.status(404).send('Cannot update creature with id = ' + id); //Client error status - 404 means "Not Found"
         }
         else 
         {
@@ -114,7 +114,43 @@ export async function updateCreatureById(req: Request, res: Response)
     catch (err) 
     {
         //Server error status - 500 means "Internal Server Error"
-        res.status(500).send("Could updating creatures by ID. Error: " + err); 
+        res.status(500).send("Could retrieve creatures by ID. Error: " + err); 
+    }
+    finally 
+    {
+        await disconnect();
+    }
+}
+
+/**
+ * Deletes a creature by ID from the data sources
+ * @param req 
+ * @param res 
+ */
+export async function deleteCreatureById(req: Request, res: Response)
+{
+
+    const id = req.params.id;
+
+    try 
+    {
+        await connect();
+
+        const result = await creatureModel.findByIdAndDelete(id);
+
+        if (!result) 
+        {
+            res.status(404).send('Cannot delete creature with id = ' + id); //Client error status - 404 means "Not Found"
+        }
+        else 
+        {
+            res.status(200).send('Creature was successfully deleted.'); //Succes status - 200 means "OK"
+        }
+    }
+    catch (err) 
+    {
+        //Server error status - 500 means "Internal Server Error"
+        res.status(500).send("Could retrieve creatures by ID. Error: " + err);
     }
     finally 
     {
