@@ -22,10 +22,10 @@ export async function createCreature(req: Request, res: Response): Promise<void>
 
         res.status(201).send(result); //Succes status - 201 means "Created"
     }
-    catch 
+    catch (err) 
     {
         //Server error status - 500 means "Internal Server Error"
-        res.status(500).send("Error: Could not create creature"); 
+        res.status(500).send("Could not create creature. Error: " + err); 
     }
     finally 
     {

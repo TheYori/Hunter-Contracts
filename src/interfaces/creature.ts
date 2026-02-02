@@ -3,10 +3,11 @@ import {Hunter} from './hunter'
 export interface Creature extends Document 
 {
     name: string;
-    Species: string;
-    Status: string;
-    Characteristics: string;
+    species: string;
+    status: string;
+    characteristics: string;
     weakness: string;
+    located:string;
     hunted: number;
     imageURL: string;
     isUnique: boolean;

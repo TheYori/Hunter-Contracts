@@ -10,8 +10,11 @@ const app: Application = express();
 
 export function startServer() 
 {
+    // JSON body parser
+    app.use(express.json());
+
     // binds routes to the app
-    app.use('/api', routes)
+    app.use('/api', routes);
 
     //tests the connection to the database
     testConnection();
