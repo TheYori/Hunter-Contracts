@@ -85,3 +85,39 @@ export async function getCreatureById(req: Request, res: Response)
         await disconnect();
     }
 }
+
+/**
+ * Updates a creature by ID from the data sources
+ * @param req 
+ * @param res 
+ */
+export async function updateCreatureById(req: Request, res: Response)
+{
+
+    const id = req.params.id;
+
+    try 
+    {
+        await connect();
+
+        const result = await creatureModel.findByIdAndUpdate(id, req.body);
+
+        if (!result) 
+        {
+            res.status(404).send('Cannot update create with id = ' + id); //Client error status - 404 means "Not Found"
+        }
+        else 
+        {
+            res.status(200).send('Creature was successfully updated.'); //Succes status - 200 means "OK"
+        }
+    }
+    catch (err) 
+    {
+        //Server error status - 500 means "Internal Server Error"
+        res.status(500).send("Could updating creatures by ID. Error: " + err); 
+    }
+    finally 
+    {
+        await disconnect();
+    }
+}
