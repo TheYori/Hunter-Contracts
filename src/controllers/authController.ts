@@ -5,9 +5,9 @@ import {
   type NextFunction
 } from "express";
 
-//import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
-//import bcrypt from "bcrypt";
+import bcrypt from "bcrypt";
 import Joi, { ValidationResult } from "joi";
 
 // Project imports
@@ -34,17 +34,41 @@ export async function registerHunter(req: Request, res: Response)
             res.status(400).json({error: error.details[0].message});
             return;
         }
-        // Checks if the email is registered already
-        // Hashes the password (with bcrypt)
-        // Creates a hunter object and saves it in the DB
-    }
-    catch
-    {
 
+        await connect();
+
+        // Checks if the email is registered already
+        const emailExists = await hunterModel.findOne({ email: req.body.email });
+
+        if (emailExists)
+        {
+            //Server error status - 400 means "Bad Request"
+            res.status(400).json({ error: "The email is already registered to a hunter." });
+            return;
+        }
+
+        // Hashes the password (with bcrypt)
+        const salt = await bcrypt.genSalt(11);
+        const hashedPassword = await bcrypt.hash(req.body.password, salt)
+
+        // Creates a hunter object and saves it in the DB
+        const hunterObject = new hunterModel({
+            name: req.body.name,
+            email: req.body.email,
+            password: hashedPassword
+        });
+
+        const savedHunter = await hunterObject.save();
+        res.status(200).json({ error: null, data: savedHunter._id }); //Success status - 200 means "OK"
+    }
+    catch (err)
+    {
+        //Server error status - 500 means "Internal Server Error"
+        res.status(500).send("Issue occurred registering hunter. Error: " + err);
     }
     finally
     {
-
+        await disconnect();
     }
 }
 

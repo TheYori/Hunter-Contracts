@@ -78,7 +78,7 @@ export async function getCreatureById(req: Request, res: Response)
     catch (err) 
     {
         //Server error status - 500 means "Internal Server Error"
-        res.status(500).send("Could retrieve creatures by ID. Error: " + err); 
+        res.status(500).send("Could not retrieve creatures by ID. Error: " + err); 
     }
     finally 
     {
