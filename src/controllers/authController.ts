@@ -55,7 +55,10 @@ export async function registerHunter(req: Request, res: Response)
         const hunterObject = new hunterModel({
             name: req.body.name,
             email: req.body.email,
-            password: hashedPassword
+            password: hashedPassword,
+            experienceYears: req.body.experienceYears,
+            country: req.body.country,
+            huntingArea: req.body.huntingArea          
         });
 
         const savedHunter = await hunterObject.save();
@@ -83,7 +86,10 @@ export function validateHunterRegistration(data: Hunter): ValidationResult
     const schema = Joi.object({
         name: Joi.string().min(3).max(150).required(),
         email: Joi.string().email().min(6).max(150).required(),
-        password: Joi.string().min(8).max(150).required()
+        password: Joi.string().min(8).max(150).required(),
+        experienceYears: Joi.number().min(0).max(99).required(),
+        country: Joi.string(),
+        huntingArea: Joi.string()
     });
 
     return schema.validate(data);
