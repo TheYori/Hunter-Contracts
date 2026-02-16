@@ -30,7 +30,7 @@ export async function registerHunter(req: Request, res: Response)
 
         if (error) 
         {
-            //Server error status - 400 means "Bad Request"
+            //Client error status - 400 means "Bad Request"
             res.status(400).json({error: error.details[0].message});
             return;
         }
@@ -42,7 +42,7 @@ export async function registerHunter(req: Request, res: Response)
 
         if (emailExists)
         {
-            //Server error status - 400 means "Bad Request"
+            //Client error status - 400 means "Bad Request"
             res.status(400).json({ error: "The email is already registered to a hunter." });
             return;
         }
@@ -89,7 +89,7 @@ export async function loginHunter(req: Request, res: Response)
 
         if (error)
         {
-            //Server error status - 400 means "Bad Request"
+            //Client error status - 400 means "Bad Request"
             res.status(400).json({ error: error.details[0].message });
             return;
         }
@@ -141,6 +141,39 @@ export async function loginHunter(req: Request, res: Response)
     finally
     {
         await disconnect();
+    }
+}
+
+/**
+ * Middleware logic used to verify the client's JWT token
+ * @param req 
+ * @param res 
+ * @param next 
+ */
+export function verifyToken(req: Request, res: Response, next: NextFunction)
+{
+    const token = req.header("auth-token");
+
+    if (!token)
+    {
+        //Client error status - 400 means "Bad Request"
+        res.status(400).json({ error: "Access Denied." });
+        return;
+    }
+
+    try
+    {
+        if (token)
+        {
+            jwt.verify(token, process.env.TOKEN_SECRET as string);
+        }
+
+        next(); 
+    }
+    catch
+    {
+        //Client error status - 401 means "Unauthorized"
+        res.status(401).send("Invalid token..");
     }
 }
 

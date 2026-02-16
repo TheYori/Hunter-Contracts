@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express'
 import { createCreature, getAllCreatures, getCreatureById, updateCreatureById, deleteCreatureById } from './controllers/creatureController';
-import { loginHunter, registerHunter } from './controllers/authController';
+import { loginHunter, registerHunter, verifyToken } from './controllers/authController';
 
 const router: Router = Router();
 
@@ -16,15 +16,15 @@ router.post('/hunter/register', registerHunter);
 router.post('/hunter/login', loginHunter)
 
 //Create
-router.post('/creatures', createCreature);
+router.post('/creatures', verifyToken, createCreature);
 
 //Get
 router.get('/creatures', getAllCreatures);
 router.get('/creatures/:id', getCreatureById);
 
 //Update
-router.put('/creatures/:id', updateCreatureById);
+router.put('/creatures/:id', verifyToken, updateCreatureById);
 
 //Delete
-router.delete('/creatures/:id', deleteCreatureById);
+router.delete('/creatures/:id', verifyToken, deleteCreatureById);
 export default router;
