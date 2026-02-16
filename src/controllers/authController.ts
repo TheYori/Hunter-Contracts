@@ -75,7 +75,74 @@ export async function registerHunter(req: Request, res: Response)
     }
 }
 
+/**
+ * Login an existing hunter
+ * @param req 
+ * @param res 
+ */
+export async function loginHunter(req: Request, res: Response)
+{
+    try
+    {
+        // Validates hunter login data
+        const {error} = validateHunterLogin(req.body);
 
+        if (error)
+        {
+            //Server error status - 400 means "Bad Request"
+            res.status(400).json({ error: error.details[0].message });
+            return;
+        }
+
+        // Finds the hunter in the repo
+        await connect();
+
+        const hunter: Hunter | null = await hunterModel.findOne({ email: req.body.email });
+
+        if (!hunter)
+        {
+            //Server error status - 400 means "Bad Request"
+            res.status(400).json({ error: "Login info is wrong. Check pass and/or email." });
+            return;
+        }
+        else
+        {
+            // Creates authentication token and sens it back
+            const validPassword: boolean = await bcrypt.compare(req.body.password, hunter.password);
+
+            if (!validPassword) 
+            {
+                //Server error status - 400 means "Bad Request"
+                res.status(400).json({ error: "Login info is wrong. Check pass and/or email." });
+                return;
+            }
+
+            const hunterId: string = hunter.id;
+            const token: string = jwt.sign(
+                {
+                    // payload
+                    name: hunter.name,
+                    email: hunter.email,
+                    id: hunterId
+                },
+                process.env.TOKEN_SECRET as string,
+                { expiresIn: '2h'}
+            );
+
+            // Attaches the token and sends it back to the client
+            res.status(200).header("auth-token", token).json({ error: null, data: {hunterId, token} });
+        }
+    }
+    catch (err)
+    {
+        //Server error status - 500 means "Internal Server Error"
+        res.status(500).send("Issue with logging in hunter. Error: " + err); 
+    }
+    finally
+    {
+        await disconnect();
+    }
+}
 
 /**
  * Validates specific hunter registration info (name, email, password)
