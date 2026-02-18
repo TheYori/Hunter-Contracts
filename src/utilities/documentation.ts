@@ -1,7 +1,6 @@
 import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import { Application } from 'express';
-import { title } from 'node:process';
 
 /**
  * Setup of Swagger documentation
@@ -24,10 +23,6 @@ export function setupDocumentation(app: Application)
             {
                 url: 'http://localhost:4000/api/',
                 description: 'Local development server',
-            },
-            {
-                url: 'https://ments-api-kex4.onrender.com/api/',
-                description: 'Remote development server',
             }
         ],
         components: 
@@ -57,6 +52,23 @@ export function setupDocumentation(app: Application)
                         hunted: { type: 'number' },
                         imageURL: { type: 'string' },
                         isUnique: { type: 'boolean' },
+                        isHidden: { type: 'boolean' },
+                        _createdBy: { type: 'string' },
+                    },
+                },
+                Ghost: 
+                {
+                    type: 'object',
+                    properties: 
+                    {
+                        type: { type: 'string' },
+                        status: { type: 'string' },
+                        characteristics: { type: 'string' },
+                        abilities: { type: 'string' },
+                        weakness: { type: 'string' },
+                        note: { type: 'string' },
+                        hunted: { type: 'number' },
+                        imageURL: { type: 'string' },
                         isHidden: { type: 'boolean' },
                         _createdBy: { type: 'string' },
                     },
