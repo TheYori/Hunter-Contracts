@@ -3,6 +3,7 @@ import DotenvFlow from 'dotenv-flow';
 import routes from './routes';
 import cors from 'cors';
 import {testConnection} from './repo/database';
+import { setupDocumentation } from './utilities/documentation';
 
 // Setup of dotenv configuration
 DotenvFlow.config();
@@ -42,6 +43,8 @@ export function startServer()
 
     // binds routes to the app
     app.use('/api', routes);
+
+    setupDocumentation(app);
 
     //tests the connection to the database
     testConnection();
