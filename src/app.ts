@@ -1,6 +1,7 @@
 import express, {Application, Request, Response} from 'express';
 import DotenvFlow from 'dotenv-flow';
 import routes from './routes';
+import cors from 'cors';
 import {testConnection} from './repo/database';
 
 // Setup of dotenv configuration
@@ -8,8 +9,34 @@ DotenvFlow.config();
 //Create express application
 const app: Application = express();
 
+/**
+ * Setup of CORS handling
+ */
+function corsSetup()
+{
+    app.use(cors({
+ 
+        origin: "*",                            // Allows request from any origin
+
+        methods: 'GET, PUT, POST, DELETE',      // Allows HTTP methods
+
+        allowedHeaders:                         // Allows headers
+        [
+            'auth-token', 
+            'Origin', 
+            'X-Requested-Width', 
+            'Content-Type', 
+            'Accept'
+        ],
+
+        credentials: true                       // Allows credentials
+    }))
+}
+
 export function startServer() 
 {
+    corsSetup();
+
     // JSON body parser
     app.use(express.json());
 
