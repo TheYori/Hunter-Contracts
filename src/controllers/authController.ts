@@ -62,7 +62,7 @@ export async function registerHunter(req: Request, res: Response)
         });
 
         const savedHunter = await hunterObject.save();
-        res.status(200).json({ error: null, data: savedHunter._id }); //Success status - 200 means "OK"
+        res.status(201).json({ error: null, data: savedHunter._id }); //Success status - 200 means "OK"
     }
     catch (err)
     {
