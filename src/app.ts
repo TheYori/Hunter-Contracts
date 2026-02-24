@@ -1,4 +1,4 @@
-import express, {Application, Request, Response} from 'express';
+import express, {Application, /*Request, Response*/} from 'express';
 import DotenvFlow from 'dotenv-flow';
 import routes from './routes';
 import cors from 'cors';
@@ -17,7 +17,8 @@ function corsSetup()
 {
     app.use(cors({
  
-        origin: "*",                            // Allows request from any origin
+        origin: "*",                            // Allows request from any origin. 
+                                                // Wildcard "*" can't be used when credentials are allowed. In that case, the origin must be explicitly specified.
 
         methods: 'GET, PUT, POST, DELETE',      // Allows HTTP methods
 
