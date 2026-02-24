@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
 
+// Database health check function
 export async function testConnection() 
 {
     try 
     {
         await connect();
         await disconnect();
-        console.log("Database connection test was succesful (connect + disconnect)");
+        console.log("Database connection test was successful (connect + disconnect)");
     }
     catch (error) 
     {
@@ -24,6 +25,7 @@ export async function connect() {
 
         await mongoose.connect(process.env.DBHOST);
 
+        // Ping the database to check if the connection is established
         if(mongoose.connection.db) 
         {
             await mongoose.connection.db.admin().command({ping: 1});
