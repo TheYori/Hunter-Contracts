@@ -23,6 +23,10 @@ export function setupDocumentation(app: Application)
             {
                 url: 'http://localhost:4000/api/',
                 description: 'Local development server',
+            },
+            {
+                url: 'https://hunter-contracts.onrender.com/api/',
+                description: 'Production server',
             }
         ],
         components: 
