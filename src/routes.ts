@@ -20,7 +20,7 @@ const router: Router = Router();
  */
 router.get('/', (req: Request, res: Response) => {
     //Success status - 200 means "OK"
-    res.status(200).send('welcome to the Hunter API') 
+    res.status(200).send({message: 'welcome to the Hunter API'}) 
 });
 
 //---------- HUNTER CRUD ---------- 

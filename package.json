@@ -16,9 +16,10 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf -/dist && tsc",
-    "start-dev": "npx nodemon",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "npx eslint"
+    "start-dev": "cross-env NODE_ENV=development npx nodemon",
+    "lint": "npx eslint",
+    "testdb": "cross-env NODE_ENV=test npx ts-node ./src/index.ts",
+    "test": "npx playwright test --reporter=list"
   },
   "nodemonConfig": {
     "verbose": false,
@@ -47,6 +48,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.58.2",
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",

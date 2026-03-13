@@ -20,7 +20,7 @@ export async function createCreature(req: Request, res: Response): Promise<void>
         const creature = new creatureModel(data);
         const result = await creature.save();
 
-        res.status(201).send(result); //Succes status - 201 means "Created"
+        res.status(201).send(result); //Success status - 201 means "Created"
     }
     catch (err) 
     {
@@ -46,7 +46,7 @@ export async function getAllCreatures(req: Request, res: Response)
 
         const result = await creatureModel.find({});
 
-        res.status(200).send(result); //Succes status - 200 means "OK"
+        res.status(200).send(result); //Success status - 200 means "OK"
     }
     catch (err) 
     {
@@ -73,7 +73,7 @@ export async function getCreatureById(req: Request, res: Response)
         const id = req.params.id;
         const result = await creatureModel.find({_id: id});
 
-        res.status(200).send(result); //Succes status - 200 means "OK"
+        res.status(200).send(result); //Success status - 200 means "OK"
     }
     catch (err) 
     {
@@ -108,7 +108,7 @@ export async function updateCreatureById(req: Request, res: Response)
         }
         else 
         {
-            res.status(200).send('Creature was successfully updated.'); //Succes status - 200 means "OK"
+            res.status(200).send('Creature was successfully updated.'); //Success status - 200 means "OK"
         }
     }
     catch (err) 
@@ -144,7 +144,7 @@ export async function deleteCreatureById(req: Request, res: Response)
         }
         else 
         {
-            res.status(200).send('Creature was successfully deleted.'); //Succes status - 200 means "OK"
+            res.status(200).send('Creature was successfully deleted.'); //Success status - 200 means "OK"
         }
     }
     catch (err) 

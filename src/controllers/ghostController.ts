@@ -73,7 +73,7 @@ export async function getGhostById(req: Request, res: Response)
         const id = req.params.id;
         const result = await ghostModel.find({_id: id});
 
-        res.status(200).send(result); //Succes status - 200 means "OK"
+        res.status(200).send(result); //Success status - 200 means "OK"
     }
     catch (err) 
     {
@@ -108,7 +108,7 @@ export async function updateGhostById(req: Request, res: Response)
         }
         else 
         {
-            res.status(200).send('Your ghost was successfully updated.'); //Succes status - 200 means "OK"
+            res.status(200).send('Your ghost was successfully updated.'); //Success status - 200 means "OK"
         }
     }
     catch (err) 
