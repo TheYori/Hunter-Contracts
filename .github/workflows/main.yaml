@@ -34,13 +34,13 @@ jobs:
           TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
 
   deploy:
-  name: Deploy
-  needs: [ test ]
-  runs-on: ubuntu-latest
+    name: Deploy
+    needs: [ test ]
+    runs-on: ubuntu-latest
 
-  steps:
-    - name: Checkout
-      uses: JorgeLNJunior/render-deploy@v1.5.0
-      with:
-        service-id: ${{ secrets.RENDER_SERVICE_ID }}
-        api-key: ${{ secrets.RENDER_API_KEY }}
+    steps:
+      - name: Checkout
+        uses: JorgeLNJunior/render-deploy@v1.5.0
+        with:
+          service-id: ${{ secrets.RENDER_SERVICE_ID }}
+          api-key: ${{ secrets.RENDER_API_KEY }}
