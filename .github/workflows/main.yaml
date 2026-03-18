@@ -42,5 +42,5 @@ jobs:
       - name: Checkout
         uses: JorgeLNJunior/render-deploy@v1.5.0
         with:
-          service_id: ${{ secrets.SERVICE_ID }}
+          service_id: ${{ secrets.SERVICE_ID }} # Should be fixed
           api_key: ${{ secrets.RENDER_API_KEY }}
