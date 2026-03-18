@@ -33,19 +33,14 @@ jobs:
           DBHOST: ${{ secrets.DBHOST }}
           TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
 
-deploy:
+  deploy:
   name: Deploy
   needs: [ test ]
   runs-on: ubuntu-latest
 
   steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: JorgeLNJunior/render-deploy@v1.5.0
       with:
-        fetch-depth: 0
-
-    - name: Add remote origin to Render
-      run: git remote add render https://render:${{ secret.RENDER_API_KEY }}@git.render.com/${{ secrets.RENDER_APP_NAME }}.git
-
-    - name: Deploy code to Render
-      run: git push render main  
+        service-id: ${{ secrets.RENDER_SERVICE_ID }}
+        api-key: ${{ secrets.RENDER_API_KEY }}
