@@ -44,3 +44,5 @@ jobs:
         with:
           service_id: ${{ secrets.SERVICE_ID }} # Should be fixed
           api_key: ${{ secrets.RENDER_API_KEY }}
+
+          # Testing Render Deploy Action
