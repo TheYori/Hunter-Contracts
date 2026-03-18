@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express'
 import { createCreature, getAllCreatures, getCreatureById, updateCreatureById, deleteCreatureById } from './controllers/creatureController';
 import { createGhost, getAllGhosts, getGhostById, updateGhostById, deleteGhostById} from './controllers/ghostController'
 import { loginHunter, registerHunter, verifyToken } from './controllers/authController';
+import { startCron } from './controllers/devToolsController';
 
 const router: Router = Router();
 
@@ -22,6 +23,27 @@ router.get('/', (req: Request, res: Response) => {
     //Success status - 200 means "OK"
     res.status(200).send({message: 'welcome to the Hunter API'}) 
 });
+
+/**
+ * @swagger
+ * /start-cron/{duration}:
+ *   get:
+ *     tags:
+ *       - Start Cron Jobs
+ *     summary: Starts the cron job that keep render alive
+ *     description: N/A
+ *     parameters:
+ *       - in: path
+ *         name: duration
+ *         required: true
+ *         description: The total duration to keep the remote server alive in minutes
+ *         schema:
+ *           type: number
+ *     responses:
+ *       200:
+ *         description: Response from the cron job           
+ */
+router.get('/start-cron/:duration', startCron);
 
 //---------- HUNTER CRUD ---------- 
 //Authenticate
